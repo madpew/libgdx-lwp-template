@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Template LWP</string>
+    <string name="lblSettings">Einstellungen</string>
+    <string name="lblNotice">Das ist ein LiveWallpaper/Daydream. Zum Verwenden wählen Sie es bitte in den Displayeinstellungen Ihres Geräts.</string>
+    <string name="lblLinkLabel">Webseite besuchen</string>
+    <string name="lblLinkContent">http://example.org/template</string>
+</resources>

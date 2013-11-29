@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My LibGDX Game</string>
+    <string name="app_name">Template LWP</string>
+    <string name="lblSettings">Settings</string>
+    <string name="lblNotice">This is a livewallpaper/daydream. You must select it in your device displaysettings.</string>
+    <string name="lblLinkLabel">visit website</string>
+    <string name="lblLinkContent">http://example.org/template</string>
 </resources>
