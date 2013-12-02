@@ -10,41 +10,54 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.PixmapIO;
-/*import com.badlogic.gdx.Preferences;*/
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Pixmap;
 
 public class TemplateMain extends Game {
 	
-	public static float xOffset = 0;
-	public static float yOffset = 0;
-	public static float xOffsetStep = 0;
-	public static float yOffsetStep = 0;
-	public static float xPixelOffset = 0;
-	public static float yPixelOffset = 0;
+	public float xOffset = 0;
+	public float yOffset = 0;
+	public float xOffsetStep = 0;
+	public float yOffsetStep = 0;
+	public float xPixelOffset = 0;
+	public float yPixelOffset = 0;
 	
-	public static boolean isPreview = false;
+	public boolean isPreview = false;
+	public boolean canScroll = false;
 	
-	/* Settings */
+	private MainScreen mainScreen;
+	private boolean pressedScreenshotKey = false;
 
+	/* Settings */
 	
 	
-	
-	private static MainScreen mainScreen;
 	
 	@Override
 	public void create() {
-		loadSettings();
+		this.loadSettings();
 		
-		if (TemplateMain.mainScreen == null){
-			TemplateMain.mainScreen = new MainScreen();
+		if (this.mainScreen == null){
+			this.mainScreen = new MainScreen();
 		}
 		
-		this.setScreen(TemplateMain.mainScreen);
+		this.setPreview(this.isPreview);
+		this.setScreen(this.mainScreen);
 	}
 
+	public void setPreview(boolean isPreview){
+		this.isPreview = isPreview;
+		
+		if (this.mainScreen != null){
+			this.mainScreen.isPreview = this.isPreview;
+			this.mainScreen.canScroll = this.isPreview ? false : this.canScroll;
+		}
+	}
+	
 	@Override
 	public void dispose() {
-		
+		if (this.mainScreen != null){
+			this.mainScreen.dispose();
+		}
 	}
 	
 	@Override
@@ -55,41 +68,45 @@ public class TemplateMain extends Game {
 	@Override
 	public void resume(){
 		super.resume();
-		loadSettings();
+		this.loadSettings();
 	}
 	
 	@Override
 	public void resize(int w, int h){
 
-		if (TemplateMain.mainScreen != null){
+		if (this.mainScreen != null){
 			if (w > h){
-				TemplateMain.mainScreen.setLandscape();
+				this.mainScreen.setLandscape();
 			}else{
-				TemplateMain.mainScreen.setPortrait();
+				this.mainScreen.setPortrait();
 			}
 		}
 	}
 	
-	private static boolean pressedScreenshotKey = false;
 	@Override
 	public void render(){
+		
+		if (this.mainScreen != null && this.mainScreen.canScroll){
+			this.mainScreen.scrollPosition.set(-this.xPixelOffset, -this.yPixelOffset, 1);
+		}
+		
 		super.render();
 		
 		if (Gdx.input.isKeyPressed(Keys.F12)){
 			
-			if (!pressedScreenshotKey){
-				makeScreenshot();
+			if (!this.pressedScreenshotKey){
+				this.makeScreenshot();
 			}
 			
-			pressedScreenshotKey = true;
+			this.pressedScreenshotKey = true;
 		}else{
-			pressedScreenshotKey = false;
+			this.pressedScreenshotKey = false;
 		}
 	}
 	
 	public void loadSettings(){
-		/*Preferences prefs = Gdx.app.getPreferences("templatelwpSettings");
-		TemplateMain.xxx = prefs.getBoolean("xxx", true);*/
+		Preferences prefs = Gdx.app.getPreferences("templatelwpSettings");
+		/*TemplateMain.xxx = prefs.getBoolean("xxx", true);*/
 	}
 	
 	private void makeScreenshot(){

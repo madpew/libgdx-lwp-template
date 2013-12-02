@@ -2,7 +2,6 @@ package org.example.lwp.template;
 
 import android.annotation.TargetApi;
  
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.android.AndroidDaydream;
 
@@ -19,8 +18,7 @@ public class TemplateDaydream extends AndroidDaydream {
       AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
       cfg.useGL20 = false;
       
-      ApplicationListener app = new TemplateMain();
-      initialize(app, cfg);
+      initialize(new TemplateMain(), cfg);
    }
    
    @Override
